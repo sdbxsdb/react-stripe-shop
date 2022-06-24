@@ -1,7 +1,16 @@
-
+import { signInWithGooglePopup } from '../../utils/firebase/firebase.utils'
 const SignIn = () => {
+
+  const logGoogleUser = async () => {
+    const res = await signInWithGooglePopup();
+    console.log(res);
+  }
+  
   return (
-    <div>Sign In Page</div>
+    <div>
+      <h1>Sign In Page</h1>
+      <button onClick={logGoogleUser}>Sign In with Google</button>
+    </div>
   )
 }
 
