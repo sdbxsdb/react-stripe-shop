@@ -3,7 +3,8 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
-  FacebookAuthProvider
+  FacebookAuthProvider,
+  createUserWithEmailAndPassword
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -19,6 +20,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
+
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: "select_account",
@@ -26,25 +28,22 @@ googleProvider.setCustomParameters({
 
 const facebookProvider = new FacebookAuthProvider();
 
-
+export const db = getFirestore();
 
 export const auth = getAuth();
 
-
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
-
 
 export const signInWithFacebookPopup = () =>
 signInWithPopup(auth, facebookProvider)
 
 
-export const db = getFirestore();
-
-
 
 export const createUserDocumentFromAuth = async (userAuth) => {
- 
+
+  if(!userAuth) return;
+
   const userDocRef = doc(db, "users", userAuth.uid);
 
   console.log({userDocRef});
@@ -70,9 +69,15 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     }
   }
 
-
-
   //If user data exists
   //return useDocRef
   return userDocRef;
 };
+
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+
+  if(!email || !password) return;
+
+  return await createAuthUserWithEmailAndPassword(auth, email, password)
+}
