@@ -1,10 +1,10 @@
 .button-container {
-  min-width: 165px;
+  min-width: 100px;
   width: auto;
-  height: 50px;
+  height: auto;
   letter-spacing: 0.5px;
-  line-height: 50px;
-  padding: 0 35px 0 35px;
+  // line-height: 50px;
+  padding: 1rem 2rem;
   font-size: 15px;
   background-color: black;
   color: white;
@@ -40,7 +40,7 @@
     &:hover {
       background-color: black;
       color: white;
-      border: none;
+      border: 1px solid transparent;
     }
   }
 }
