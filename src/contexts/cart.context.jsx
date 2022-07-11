@@ -6,7 +6,6 @@ const addCartItem = (cartItems, productToAdd) => {
     (cartItem) => cartItem.id === productToAdd.id
   );
 
-
   //if found incrememnt quantity
   if (existingCartItem) {
     return cartItems.map((cartItem) =>
@@ -23,13 +22,15 @@ const addCartItem = (cartItems, productToAdd) => {
 
 
 
+
+
 //the actual value you want to access
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
-  removeItemFromCart: () => {},
+  emptyWholeCart: () => {},
   totalQuantity: 0,
 });
 
@@ -47,8 +48,18 @@ export const CartProvider = ({ children }) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
 
-  const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems, totalQuantity };
+  const emptyWholeCart = () => {
+    setCartItems([]);
+  };
 
+  const value = {
+    isCartOpen,
+    setIsCartOpen,
+    addItemToCart,
+    emptyWholeCart,
+    cartItems,
+    totalQuantity,
+  };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

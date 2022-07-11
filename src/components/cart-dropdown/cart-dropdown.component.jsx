@@ -8,7 +8,7 @@ const CartDropdown = () => {
   const { isCartOpen, setIsCartOpen } = useContext(CartContext);
   const closeCart = () => setIsCartOpen(false);
 
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, emptyWholeCart } = useContext(CartContext);
 
   return (
     <>
@@ -24,6 +24,7 @@ const CartDropdown = () => {
           ))}
         </div>
         <Button buttonType="inverted">CHECKOUT</Button>
+        <small onClick={emptyWholeCart} className='text-center cursor-pointer'>Empty Cart</small>
       </div>
     </>
   );
