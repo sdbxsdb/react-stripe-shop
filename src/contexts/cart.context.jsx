@@ -21,7 +21,7 @@ const addCartItem = (cartItems, productToAdd) => {
 
 
 
-const removeCartItem = (cartItems, cartItemToRemove) => {
+const decreaseCartItem = (cartItems, cartItemToRemove) => {
   //find if cartItems contains cartItemToRemove
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === cartItemToRemove.id
@@ -74,7 +74,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeItemFromCart = (cartItemToRemove) => {
-    setCartItems(removeCartItem(cartItems, cartItemToRemove));
+    setCartItems(decreaseCartItem(cartItems, cartItemToRemove));
   };
 
   const emptyCart = () => {
