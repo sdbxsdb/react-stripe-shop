@@ -3,12 +3,21 @@ import Button from "../button/button.component";
 import { CartContext } from "../../contexts/cart.context";
 import { useContext } from "react";
 import CartItem from "../cart-item/cart-item.component";
+import { useNavigate } from "react-router-dom";
 
 const CartDropdown = () => {
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+  const { setIsCartOpen } = useContext(CartContext);
   const closeCart = () => setIsCartOpen(false);
 
-  const { cartItems, emptyWholeCart } = useContext(CartContext);
+  const { cartItems, emptyCart, totalPrice } = useContext(CartContext);
+
+
+  const navigate = useNavigate();
+
+  const goToCheckoutHandler = () => {
+    setIsCartOpen(false);
+    navigate("/checkout");
+  };
 
   return (
     <>
@@ -23,8 +32,13 @@ const CartDropdown = () => {
             <CartItem key={item.id} cartItem={item} />
           ))}
         </div>
-        <Button buttonType="inverted">CHECKOUT</Button>
-        <small onClick={emptyWholeCart} className='text-center cursor-pointer'>Empty Cart</small>
+        <h1>Total - {totalPrice}</h1>
+        <Button onClick={goToCheckoutHandler} buttonType="inverted">
+          CHECKOUT
+        </Button>
+        <small onClick={emptyCart} className="text-center cursor-pointer mt-1">
+          Empty Cart
+        </small>
       </div>
     </>
   );
