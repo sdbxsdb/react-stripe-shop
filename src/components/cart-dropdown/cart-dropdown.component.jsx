@@ -11,7 +11,6 @@ const CartDropdown = () => {
 
   const { cartItems, emptyCart, totalPrice } = useContext(CartContext);
 
-
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
@@ -23,8 +22,7 @@ const CartDropdown = () => {
     <>
       <div
         onClick={closeCart}
-        className="z-20 absolute h-screen w-screen"
-      ></div>
+        className="z-20 absolute h-screen w-screen"></div>
 
       <div className="cart-dropdown-container">
         <div className="cart-items">
@@ -32,13 +30,21 @@ const CartDropdown = () => {
             <CartItem key={item.id} cartItem={item} />
           ))}
         </div>
-        <h1>Total - {totalPrice}</h1>
+        {cartItems.length > 0 ? (
+          <>
+        <h1 className="w-full text-right font-bold mb-4">Total: £{totalPrice}</h1>
         <Button onClick={goToCheckoutHandler} buttonType="inverted">
           CHECKOUT
         </Button>
         <small onClick={emptyCart} className="text-center cursor-pointer mt-1">
           Empty Cart
         </small>
+        </>
+        ) : (
+        <div>
+          <span>Your cart is empty</span>
+        </div>
+        )}
       </div>
     </>
   );

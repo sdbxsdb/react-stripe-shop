@@ -19,27 +19,27 @@ const addCartItem = (cartItems, productToAdd) => {
   return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
-
-
 const decreaseCartItem = (cartItems, cartItemToRemove) => {
   //find if cartItems contains cartItemToRemove
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === cartItemToRemove.id
   );
 
-  if(existingCartItem.quantity === 1) {
-    return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id);
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
   }
 
   //return new array with modified cartItems
   return cartItems.map((cartItem) =>
-      cartItem.id === cartItemToRemove.id
-        ? { ...cartItem, quantity: cartItem.quantity - 1 }
-        : cartItem
-    );
-}
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
+};
 
-
+const clearCartItem = (cartItems, cartItemToClear) => {
+  return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+};
 
 //the actual value you want to access
 export const CartContext = createContext({
@@ -47,10 +47,11 @@ export const CartContext = createContext({
   setIsCartOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
-  removeItemFromCart: () => {},
+  decreaseItemFromCart: () => {},
   emptyCart: () => {},
   totalQuantity: 0,
   totalPrice: 0,
+  clearItemFromCart: () => {},
 });
 
 export const CartProvider = ({ children }) => {
@@ -73,8 +74,12 @@ export const CartProvider = ({ children }) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
 
-  const removeItemFromCart = (cartItemToRemove) => {
+  const decreaseItemFromCart = (cartItemToRemove) => {
     setCartItems(decreaseCartItem(cartItems, cartItemToRemove));
+  };
+
+  const clearItemFromCart = (cartItemToClear) => {
+    setCartItems(clearCartItem(cartItems, cartItemToClear));
   };
 
   const emptyCart = () => {
@@ -85,12 +90,12 @@ export const CartProvider = ({ children }) => {
     isCartOpen,
     setIsCartOpen,
     addItemToCart,
-    removeItemFromCart,
+    decreaseItemFromCart,
     emptyCart,
     cartItems,
     totalQuantity,
     totalPrice,
-    
+    clearItemFromCart,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
