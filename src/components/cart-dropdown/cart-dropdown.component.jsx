@@ -26,25 +26,17 @@ const CartDropdown = () => {
       ></div>
 
       <div className="cart-dropdown-container">
-        
-        
-        <div className="w-full relative">
-          <div className="bg-gradient-to-b from-transparent to-white bottom-0 w-full h-[50px] absolute"></div>
-
-          <div className="cart-items overflow-scroll">
-            {cartItems.map((item) => (
-              <CartItem key={item.id} cartItem={item} />
-            ))}
-          </div>
-        </div>
-
-
-
-
-        
-
         {cartItems.length > 0 ? (
           <>
+            <div className="w-full relative">
+              <div className="bg-gradient-to-b from-transparent to-white bottom-0 w-full h-[50px] absolute"></div>
+
+              <div className="cart-items overflow-scroll">
+                {cartItems.map((item) => (
+                  <CartItem key={item.id} cartItem={item} />
+                ))}
+              </div>
+            </div>
             <h1 className="w-full text-right font-bold mb-4">
               Total: £{totalPrice}
             </h1>

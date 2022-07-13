@@ -31,7 +31,7 @@ const Checkout = () => {
         <span>Your cart is empty</span>
       )}
 
-      <div className='checkout-items-wrapper'>
+      <div className="checkout-items-wrapper">
         <div className="bg-gradient-to-b from-transparent to-white bottom-0 w-full h-[50px] absolute"></div>
 
         <div className="checkout-items-container pb-[40px]">
