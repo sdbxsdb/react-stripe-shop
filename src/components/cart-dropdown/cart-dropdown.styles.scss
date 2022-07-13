@@ -20,11 +20,13 @@
   }
 
   .cart-items {
-    // height: 240px;
+    min-height: 100px;
+    max-height: 500px;
     display: flex;
     flex-direction: column;
     overflow: scroll;
     padding-bottom: 10px;
+    
   }
 
   button {

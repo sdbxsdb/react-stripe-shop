@@ -22,28 +22,46 @@ const CartDropdown = () => {
     <>
       <div
         onClick={closeCart}
-        className="z-20 absolute h-screen w-screen"></div>
+        className="z-20 absolute h-screen w-screen"
+      ></div>
 
       <div className="cart-dropdown-container">
-        <div className="cart-items">
-          {cartItems.map((item) => (
-            <CartItem key={item.id} cartItem={item} />
-          ))}
+        
+        
+        <div className="w-full relative">
+          <div className="bg-gradient-to-b from-transparent to-white bottom-0 w-full h-[50px] absolute"></div>
+
+          <div className="cart-items overflow-scroll">
+            {cartItems.map((item) => (
+              <CartItem key={item.id} cartItem={item} />
+            ))}
+          </div>
         </div>
+
+
+
+
+        
+
         {cartItems.length > 0 ? (
           <>
-        <h1 className="w-full text-right font-bold mb-4">Total: £{totalPrice}</h1>
-        <Button onClick={goToCheckoutHandler} buttonType="inverted">
-          CHECKOUT
-        </Button>
-        <small onClick={emptyCart} className="text-center cursor-pointer mt-1">
-          Empty Cart
-        </small>
-        </>
+            <h1 className="w-full text-right font-bold mb-4">
+              Total: £{totalPrice}
+            </h1>
+            <Button onClick={goToCheckoutHandler} buttonType="inverted">
+              CHECKOUT
+            </Button>
+            <small
+              onClick={emptyCart}
+              className="text-center cursor-pointer mt-1"
+            >
+              Empty Cart
+            </small>
+          </>
         ) : (
-        <div>
-          <span>Your cart is empty</span>
-        </div>
+          <div>
+            <span>Your cart is empty</span>
+          </div>
         )}
       </div>
     </>
