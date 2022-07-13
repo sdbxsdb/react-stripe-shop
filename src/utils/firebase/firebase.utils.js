@@ -17,6 +17,8 @@ import {
   setDoc,
   collection,
   writeBatch,
+  query,
+  getDocs
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -40,6 +42,7 @@ const facebookProvider = new FacebookAuthProvider();
 export const db = getFirestore();
 
 
+
 export const addCollectionAndDocuments = async (
   collectionKey,
   objectsToAdd
@@ -56,6 +59,23 @@ export const addCollectionAndDocuments = async (
   console.log("DONE");
 };
 
+
+
+
+export const getCateroriesAndDocuments = async () => {
+    const collectionRef = collection(db, "categories");
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduce((accumulator, docSnapshot) => {
+      const {title, items} = docSnapshot.data();
+      accumulator[title.toLowerCase()] = items;
+      return accumulator;
+    }, {})
+
+    return categoryMap;
+
+}
 
 
 export const auth = getAuth();
