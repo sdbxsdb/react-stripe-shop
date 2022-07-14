@@ -43,7 +43,7 @@ const Checkout = () => {
         </div>
       </div>
 
-      {cartItems.length > 1 && (
+      {cartItems.length > 0 && (
         <div className="w-full flex flex-col justify-end items-end">
           <span className="">{totalQuantity} items</span>
           <span className="total">Total: £{totalPrice}</span>
