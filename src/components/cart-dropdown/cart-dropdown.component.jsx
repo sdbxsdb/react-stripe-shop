@@ -22,7 +22,7 @@ const CartDropdown = () => {
     <>
       <div
         onClick={closeCart}
-        className="z-20 absolute h-screen w-screen"
+        className="z-20 fixed top-0 left-0 h-screen w-screen"
       ></div>
 
       <div className="cart-dropdown-container">
