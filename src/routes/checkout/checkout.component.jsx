@@ -1,6 +1,7 @@
 import "./checkout.styles.scss";
 import { CartContext } from "../../contexts/cart.context";
 import { useContext } from "react";
+import Button from "../../components/button/button.component";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 const Checkout = () => {
@@ -46,7 +47,12 @@ const Checkout = () => {
       {cartItems.length > 0 && (
         <div className="w-full flex flex-col justify-end items-end">
           <span className="">{totalQuantity} items</span>
-          <span className="total">Total: £{totalPrice}</span>
+          <div className='w-full flex items-center justify-between'>
+            <Button buttonType="inverted">
+              PAY NOW
+            </Button>
+            <span className="total">Total: £{totalPrice}</span>
+          </div>
         </div>
       )}
     </div>
