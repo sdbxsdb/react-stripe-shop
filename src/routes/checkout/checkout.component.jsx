@@ -3,6 +3,7 @@ import { CartContext } from "../../contexts/cart.context";
 import { useContext } from "react";
 import Button from "../../components/button/button.component";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
+import PaymentForm from '../../components/payment-form/payment-form.component';
 
 const Checkout = () => {
   const { cartItems, totalPrice, totalQuantity } = useContext(CartContext);
@@ -48,9 +49,7 @@ const Checkout = () => {
         <div className="w-full flex flex-col justify-end items-end">
           <span className="">{totalQuantity} items</span>
           <div className='w-full flex items-center justify-between'>
-            <Button buttonType="inverted">
-              PAY NOW
-            </Button>
+            <PaymentForm/>
             <span className="total">Total: £{totalPrice}</span>
           </div>
         </div>

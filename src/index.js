@@ -7,6 +7,8 @@ import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import { CategoriesProvider } from "./contexts/categories.context";
 import { CartProvider } from "./contexts/cart.context";
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from "./utils/stripe/stripe.utils";
 
 
 
@@ -17,7 +19,9 @@ root.render(
       <CartProvider>
         <UserProvider>
           <CategoriesProvider>
-            <App />
+            <Elements stripe={stripePromise}>
+              <App />
+            </Elements>
           </CategoriesProvider>
         </UserProvider>
       </CartProvider>
