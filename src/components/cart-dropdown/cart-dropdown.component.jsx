@@ -9,7 +9,7 @@ const CartDropdown = () => {
   const { setIsCartOpen } = useContext(CartContext);
   const closeCart = () => setIsCartOpen(false);
 
-  const { cartItems, emptyCart, totalPrice } = useContext(CartContext);
+  const { cartItems, emptyCart, cartTotal } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -20,10 +20,10 @@ const CartDropdown = () => {
 
   return (
     <>
-      {/* <div
+      <div
         onClick={closeCart}
         className="z-20 fixed top-0 left-0 h-screen w-screen"
-      ></div> */}
+      ></div>
 
       <div className="cart-dropdown-container">
         {cartItems.length > 0 ? (
@@ -38,7 +38,7 @@ const CartDropdown = () => {
               </div>
             </div>
             <h1 className="w-full text-right font-bold mb-4">
-              Total: £{totalPrice}
+              Total: £{cartTotal}
             </h1>
             <Button onClick={goToCheckoutHandler} buttonType="inverted">
               CHECKOUT

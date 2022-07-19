@@ -6,7 +6,7 @@ import CheckoutItem from "../../components/checkout-item/checkout-item.component
 import PaymentForm from '../../components/payment-form/payment-form.component';
 
 const Checkout = () => {
-  const { cartItems, totalPrice, totalQuantity } = useContext(CartContext);
+  const { cartItems, cartTotal, cartCount } = useContext(CartContext);
   console.log(cartItems);
 
   return (
@@ -47,10 +47,10 @@ const Checkout = () => {
 
       {cartItems.length > 0 && (
         <div className="w-full flex flex-col justify-end items-end">
-          <span className="">{totalQuantity} items</span>
+          <span className="">{cartCount} items</span>
           <div className='w-full flex items-center justify-between'>
             <PaymentForm/>
-            <span className="total">Total: £{totalPrice}</span>
+            <span className="total">Total: £{cartTotal}</span>
           </div>
         </div>
       )}
