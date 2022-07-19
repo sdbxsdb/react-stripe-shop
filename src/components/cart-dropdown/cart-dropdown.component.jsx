@@ -20,10 +20,10 @@ const CartDropdown = () => {
 
   return (
     <>
-      <div
+      {/* <div
         onClick={closeCart}
         className="z-20 fixed top-0 left-0 h-screen w-screen"
-      ></div>
+      ></div> */}
 
       <div className="cart-dropdown-container">
         {cartItems.length > 0 ? (
