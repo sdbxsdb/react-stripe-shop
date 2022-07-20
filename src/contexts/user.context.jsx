@@ -15,6 +15,9 @@ export const USER_ACTION_TYPES = {
   SET_CURRENT_USER: "SET_CURRENT_USER",
 };
 
+const INITAL_STATE = { currentUser: null };
+
+
 const userReducer = (state, action) => {
   const { type, payload } = action;
 
@@ -29,11 +32,9 @@ const userReducer = (state, action) => {
   }
 };
 
-const INITAL_STATE = { currentUser: null };
 
 export const UserProvider = ({ children }) => {
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITAL_STATE);
-  console.log({ currentUser });
 
   const setCurrentUser = (user) => {
     dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
