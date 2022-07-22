@@ -1,20 +1,27 @@
 import "./cart-dropdown.styles.scss";
 import Button from "../button/button.component";
-import { CartContext } from "../../contexts/cart.context";
-import { useContext } from "react";
+
 import CartItem from "../cart-item/cart-item.component";
 import { useNavigate } from "react-router-dom";
 
-const CartDropdown = () => {
-  const { setIsCartOpen } = useContext(CartContext);
-  const closeCart = () => setIsCartOpen(false);
+import { useDispatch } from 'react-redux';
 
-  const { cartItems, emptyCart, cartTotal } = useContext(CartContext);
+import { useSelector } from "react-redux";
+import { selectCartItems } from '../../store/cart/cart.selector';
+
+import { setIsCartOpen } from '../../store/cart/cart.action';
+
+const CartDropdown = () => {
+  const dispatch = useDispatch();
+
+  const closeCart = () =>  dispatch(setIsCartOpen(false));
+
+  const cartItems = useSelector(selectCartItems);
 
   const navigate = useNavigate();
 
   const goToCheckoutHandler = () => {
-    setIsCartOpen(false);
+    dispatch(setIsCartOpen(false));
     navigate("/checkout");
   };
 
@@ -37,18 +44,18 @@ const CartDropdown = () => {
                 ))}
               </div>
             </div>
-            <h1 className="w-full text-right font-bold mb-4">
+            {/* <h1 className="w-full text-right font-bold mb-4">
               Total: £{cartTotal}
-            </h1>
+            </h1> */}
             <Button onClick={goToCheckoutHandler} buttonType="inverted">
               CHECKOUT
             </Button>
-            <small
+            {/* <small
               onClick={emptyCart}
               className="text-center cursor-pointer mt-1"
             >
               Empty Cart
-            </small>
+            </small> */}
           </>
         ) : (
           <div>
