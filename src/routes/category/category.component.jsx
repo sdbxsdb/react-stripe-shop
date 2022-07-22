@@ -10,12 +10,14 @@ import { selectCategoriesMap } from "../../store/categories/category.selector";
 import ProductCard from "../../components/product-card/product-card.component";
 
 const Category = () => {
+  let navigate = useNavigate();
   const { category } = useParams();
+  console.log('render/re-rendering cartegory component');
   const categoriesMap = useSelector(selectCategoriesMap);
   const [products, setProducts] = useState(categoriesMap[category]);
-  let navigate = useNavigate();
 
   useEffect(() => {
+    console.log('effect fired calling setProducts')
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 
