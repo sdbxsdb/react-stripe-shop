@@ -2,7 +2,6 @@ import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
-
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
@@ -11,6 +10,7 @@ const PaymentForm = () => {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      console.log("Stripe or elements are not loaded yet");
       return;
     }
 
@@ -31,17 +31,17 @@ const PaymentForm = () => {
     const paymentResult = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
         card: elements.getElement(CardElement),
-        billing_details: { 
-          name: 'Jimmy Bob'
-        }
-      }
+        billing_details: {
+          name: "Jimmy Bob",
+        },
+      },
     });
 
-    if(paymentResult.error) {
+    if (paymentResult.error) {
       alert(paymentResult.error);
     } else {
-      if(paymentResult.paymentIntent.status === 'succeeded') {
-        alert('Payment successful');
+      if (paymentResult.paymentIntent.status === "succeeded") {
+        alert("Payment successful");
       }
     }
   };
