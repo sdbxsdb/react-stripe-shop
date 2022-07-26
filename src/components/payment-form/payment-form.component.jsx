@@ -1,10 +1,33 @@
 import { PaymentFormContainer, FormContainer } from "./payment-form.styles";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import { selectCurrentUser } from "../../store/user/user.selector";
+import { useSelector } from "react-redux";
+import {
+  selectCartTotal,
+  selectCartItems,
+} from "../../store/cart/cart.selector";
+import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { emptyCart } from '../../store/cart/cart.action';
+
+
 
 const PaymentForm = () => {
+  const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
+  const currentUser = useSelector(selectCurrentUser);
+  const cartTotal = useSelector(selectCartTotal);
+  const cartItems = useSelector(selectCartItems);
+
+  const emptyCartHandler = () =>
+  dispatch(emptyCart(cartItems));
+
+  const payee = currentUser ? currentUser.email : "Non-registered user";
+  const cartTotalFixedTwo = Math.round(cartTotal * 100);
+
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -19,20 +42,20 @@ const PaymentForm = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: 1000 }),
+      body: JSON.stringify({ amount: cartTotalFixedTwo }),
     }).then((res) => res.json());
 
     const {
       paymentIntent: { client_secret },
     } = res;
 
-    console.log(client_secret);
+    // console.log(client_secret);
 
     const paymentResult = await stripe.confirmCardPayment(client_secret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: "Jimmy Bob",
+          name: payee,
         },
       },
     });
@@ -41,7 +64,7 @@ const PaymentForm = () => {
       alert(paymentResult.error);
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
-        alert("Payment successful");
+        setShowThankYou(true);
       }
     }
   };
@@ -51,6 +74,15 @@ const PaymentForm = () => {
       <FormContainer onSubmit={paymentHandler}>
         <CardElement />
         <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
+
+        {showThankYou && (
+          <div className="absolute backdrop-blur-md z-100 flex flex-col items-center justify-center top-0 left-0 w-screen h-screen bg-white bg-opacity-30 ">
+            <h1>Thank you!</h1>
+            <br />
+            <h1>You're order has been recieved!</h1>
+            <a href="/" onClick={()=> emptyCartHandler(cartItems)}>Continue Shopping</a>
+          </div>
+        )}
       </FormContainer>
     </PaymentFormContainer>
   );

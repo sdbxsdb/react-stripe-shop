@@ -51,7 +51,7 @@ const Checkout = () => {
           <span className="">{cartCount} items</span>
           <div className='w-full flex items-center justify-between'>
             <PaymentForm/>
-            <span className="total">Total: £{cartTotal}</span>
+            <span className="total">Total: £{(Math.round(cartTotal * 100) / 100).toFixed(2)}</span>
           </div>
         </div>
       )}
