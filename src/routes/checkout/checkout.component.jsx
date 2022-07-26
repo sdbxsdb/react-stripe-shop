@@ -9,7 +9,6 @@ const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const cartCount = useSelector(selectCartCount);
-  console.log(cartItems);
 
   return (
     <div className="checkout-container">
