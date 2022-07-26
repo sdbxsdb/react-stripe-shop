@@ -1,11 +1,27 @@
 import "./cart-item.styles.scss";
-import { useContext } from "react";
-import { CartContext } from "../../contexts/cart.context";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import {
+  addItemToCart,
+  clearItemFromCart,
+  decreaseItemFromCart,
+} from "../../store/cart/cart.action";
 
 const CartItem = ({ cartItem }) => {
   const { name, quantity, imageUrl, price } = cartItem;
 
-  const { addItemToCart, decreaseItemFromCart, clearItemFromCart } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(selectCartItems);
+
+  const addItemToCartHandler = () =>
+    dispatch(addItemToCart(cartItems, cartItem));
+
+  const decreaseItemFromCartHandler = () =>
+    dispatch(decreaseItemFromCart(cartItems, cartItem));
+    
+  const clearItemFromCartHandler = () =>
+    dispatch(clearItemFromCart(cartItems, cartItem));
+
 
   return (
     <div className="cart-item-container">
@@ -19,9 +35,9 @@ const CartItem = ({ cartItem }) => {
           </div>
         </div>
         <div className="absolute flex flex-col-reverse right-0 items-center justify-between pl-4">
-          <span className='cursor-pointer' onClick={() => decreaseItemFromCart(cartItem)}>&#8722;</span>
-          <span className='cursor-pointer' onClick={() => addItemToCart(cartItem)}>&#43;</span>
-          <div className="remove-button cursor-pointer text-red-500" onClick={() => clearItemFromCart(cartItem)}>&#10005;</div>
+          <span className='cursor-pointer' onClick={() => decreaseItemFromCartHandler(cartItem)}>&#8722;</span>
+          <span className='cursor-pointer' onClick={() => addItemToCartHandler(cartItem)}>&#43;</span>
+          <div className="remove-button cursor-pointer text-red-500" onClick={() => clearItemFromCartHandler(cartItem)}>&#10005;</div>
         </div>
       </div>
     </div>

@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 
 import { useSelector } from "react-redux";
-import { selectCartItems } from '../../store/cart/cart.selector';
+import { selectCartItems, selectCartTotal, selectCartCount } from '../../store/cart/cart.selector';
 
-import { setIsCartOpen } from '../../store/cart/cart.action';
+
+import { setIsCartOpen, emptyCart } from '../../store/cart/cart.action';
 
 const CartDropdown = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,13 @@ const CartDropdown = () => {
   const cartItems = useSelector(selectCartItems);
 
   const navigate = useNavigate();
+
+  const emptyCartHandler = () =>
+  dispatch(emptyCart(cartItems));
+
+  const cartTotal = useSelector(selectCartTotal);
+  const cartCount = useSelector(selectCartCount);
+  
 
   const goToCheckoutHandler = () => {
     dispatch(setIsCartOpen(false));
@@ -44,18 +52,21 @@ const CartDropdown = () => {
                 ))}
               </div>
             </div>
-            {/* <h1 className="w-full text-right font-bold mb-4">
-              Total: £{cartTotal}
-            </h1> */}
+            <div className="flex justify-between w-full">
+              <small className="w-full">Items: <strong>{cartCount}</strong></small>
+              <h1 className="w-full text-right font-bold mb-4">
+                Total: £{cartTotal}
+              </h1>
+            </div>
             <Button onClick={goToCheckoutHandler} buttonType="inverted">
               CHECKOUT
             </Button>
-            {/* <small
-              onClick={emptyCart}
+            <small
+              onClick={() => emptyCartHandler(cartItems)}
               className="text-center cursor-pointer mt-1"
             >
               Empty Cart
-            </small> */}
+            </small>
           </>
         ) : (
           <div>
