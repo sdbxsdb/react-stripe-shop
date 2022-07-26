@@ -55,7 +55,7 @@ const CartDropdown = () => {
             <div className="flex justify-between w-full">
               <small className="w-full">Items: <strong>{cartCount}</strong></small>
               <h1 className="w-full text-right font-bold mb-4">
-                Total: £{cartTotal}
+                Total: £{Math.round(cartTotal).toFixed(2)}
               </h1>
             </div>
             <Button onClick={goToCheckoutHandler} buttonType="inverted">
