@@ -10,6 +10,10 @@ import {
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { emptyCart } from '../../store/cart/cart.action';
+import { useNavigate } from 'react-router-dom'
+
+
+
 
 
 
@@ -20,6 +24,9 @@ const PaymentForm = () => {
   const currentUser = useSelector(selectCurrentUser);
   const cartTotal = useSelector(selectCartTotal);
   const cartItems = useSelector(selectCartItems);
+  const navigate = useNavigate()
+
+
 
   const emptyCartHandler = () =>
   dispatch(emptyCart(cartItems));
@@ -70,6 +77,11 @@ const PaymentForm = () => {
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
         setShowThankYou(true);
+        setTimeout(() => {
+          emptyCartHandler(cartItems)
+          setShowThankYou(false);
+          navigate('/')
+      }, 5000);
       }
     }
   };
@@ -82,9 +94,9 @@ const PaymentForm = () => {
 
         {showThankYou && (
           <div className="absolute backdrop-blur-md z-100 flex flex-col items-center justify-center top-0 left-0 w-screen h-screen bg-white bg-opacity-30 ">
-            <h1>Thank you!</h1>
-            <br />
-            <h1>You're order has been recieved!</h1>
+            <h1 className='text-3xl font-bold mb-4'>Thank you!</h1>
+            <p className='font-bold mb-4'>You're order has been recieved!</p>
+            <small>You'll be redirected to the home page after 5 seconds.</small>
             <a href="/" onClick={()=> emptyCartHandler(cartItems)}>Continue Shopping</a>
           </div>
         )}
