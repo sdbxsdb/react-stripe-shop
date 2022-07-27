@@ -14,9 +14,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 
-
-
-
 const PaymentForm = () => {
   const dispatch = useDispatch();
   const stripe = useStripe();
