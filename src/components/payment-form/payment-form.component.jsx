@@ -27,6 +27,7 @@ const PaymentForm = () => {
   const payee = currentUser ? currentUser.email : "Non-registered user";
   const cartTotalFixedTwo = Math.round(cartTotal * 100);
 
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
 
   const paymentHandler = async (e) => {
@@ -36,6 +37,8 @@ const PaymentForm = () => {
       console.log("Stripe or elements are not loaded yet");
       return;
     }
+
+    setIsProcessingPayment(true);
 
     const res = await fetch("/.netlify/functions/create-payment-intent", {
       method: "POST",
@@ -60,6 +63,8 @@ const PaymentForm = () => {
       },
     });
 
+    setIsProcessingPayment(false);
+
     if (paymentResult.error) {
       alert(paymentResult.error);
     } else {
@@ -73,7 +78,7 @@ const PaymentForm = () => {
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
         <CardElement />
-        <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
+        <Button isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
 
         {showThankYou && (
           <div className="absolute backdrop-blur-md z-100 flex flex-col items-center justify-center top-0 left-0 w-screen h-screen bg-white bg-opacity-30 ">
