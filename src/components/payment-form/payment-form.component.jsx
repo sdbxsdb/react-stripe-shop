@@ -84,10 +84,22 @@ const PaymentForm = () => {
   };
 
   return (
-    <PaymentFormContainer>
+    <PaymentFormContainer className="w-full">
+      
       <FormContainer onSubmit={paymentHandler}>
-        <CardElement />
-        <Button className='mt-2' isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
+
+        <div className="flex gap-x-2 mr-2 ">
+          <div className="w-full  flex  flex-col ">
+            <CardElement className="w-full" />
+            <Button className='mt-2 w-full' isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inverted}>Pay Now</Button>
+          </div>
+          <div className="flex flex-col w-full text-center justify-center items-center">
+            <small><strong>For payment demo purposes you can enter:</strong></small>
+            <small> <cite>4242 4242 4242 4242</cite> - for the card number.</small>
+            <small><cite>04/24</cite> - for the month and year.</small>
+            <small><cite>42424</cite> - for the ZIP.</small>
+          </div>
+        </div>
 
         {showThankYou && (
           <div className="absolute backdrop-blur-md z-100 flex flex-col items-center justify-center top-0 left-0 w-screen h-screen bg-white bg-opacity-30 ">

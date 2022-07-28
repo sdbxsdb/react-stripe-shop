@@ -14,4 +14,5 @@ export const FormContainer = styled.form`
   justify-content: center;
   height: 100px;
   min-width: 500px;
+  width: 100%;
 `;
